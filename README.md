@@ -7,7 +7,7 @@ https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddom
 https://www.base64encode.org/
 
 
-Base64 Client for sp1-uaa-client:admin
-c3AxLXVhYS1jbGllbnQ6YWRtaW4=
++ Base64 Client for sp1-uaa-client:admin
++ c3AxLXVhYS1jbGllbnQ6YWRtaW4=
 
 
