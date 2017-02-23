@@ -1,0 +1,13 @@
+logging:
+  level:
+      com:
+        ge:
+          predix:
+            solsvc: DEBUG
+#server:
+#  port: 9095
+spring:
+  profiles.active: local
+---
+rabitmq:
+  timeseriesQueue: timeseriesQueue
