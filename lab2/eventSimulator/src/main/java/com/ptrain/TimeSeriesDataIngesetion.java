@@ -144,6 +144,7 @@ public class TimeSeriesDataIngesetion {
 
 	public static long getLongFromDate(String date) throws ParseException {
 		// 8/22/2014 16:38i
+		//isFromEpoch = Instant.parse( "2014-10-23T00:35:14.800Z" ).toEpochMilli();
 		// SimpleDateFormat fwm = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		SimpleDateFormat fws = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d = null;

@@ -1,0 +1,129 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-vis-timeseries/px-vis-timeseries.html">
+<link rel="import" href="../../bower_components/px-vis/px-vis-data-converter.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/px-rangepicker/px-rangepicker.html">
+
+
+<dom-module id="blankpage-view">
+  <template>
+    <px-view-header title="Lab Page" style="display: block; margin-bottom: 6px;"></px-view-header>
+    <blank-card id="myCard">
+      Below is a example of how timeseries data can be fetch from  timeseries and display for Vistualation.
+      <iron-ajax
+      url="https://eventtimeseriesquery.run.aws-usw02-pr.ice.predix.io/getTimeseriesData"
+      params='{"startDate":"1487868792500", "endDate":"1488209549000", "machineList": "engine1:vibration_tg"}'
+      id="tsQueryElement" last-response="{{rawTsData}}" auto></iron-ajax>
+    <px-rangepicker
+      id="rangepicker"
+      range="{{range}}"
+      date-format="MM/DD/YYYY"
+      time-format="hh:mm:ss A"
+      show-buttons="true">
+    </px-rangepicker>  <button class="btn btn--small" on-click="_callme">Refresh</button>
+    <br>
+    <px-vis-timeseries
+      id="timeSerie"
+      options = '{
+        "enableTooltip":true,
+          "registerLocation":"none",
+        "thresholdData":[
+          { "for":"y0", "type":"max", "value":80.4784 },
+          { "for":"y0", "type":"min", "value":50.6531 }
+        ],
+        "showThresholdBox":false,
+        "selectionType": "xAxis",
+        "xAxisConfig": {
+          "title": "Date",
+          "tickFormat": "%b %d"
+        },
+        "yAxisConfig": {
+          "title": "Vibration Hz"
+        }
+      }'
+      series-config='[[seriesConfig]]'
+      chart-data="[[chartData]]"
+      event-data="[[eventData]]"
+      range="[[range]]"
+      height="300">
+    </px-vis-timeseries>
+
+    <px-vis-data-converter
+      data-key = "series"
+      id-key = "name"
+      original-data = '[[rawTsData]]'
+      series-config="{{seriesConfig}}"
+      chart-data="{{chartData}}">
+    </px-vis-data-converter>
+
+<!--
+            <div>
+              <strong>series-config</strong>
+              <pre>[[_formatName(seriesConfig)]]</pre>
+            </div>
+
+      <div style="padding-right:40px">
+        <strong>chart-data</strong>
+        <pre>[[_formatName(chartData)]]</pre>
+      </div>
+-->
+  </blank-card>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'blankpage-view',
+
+      properties: {
+        startdate:{
+          type:Date
+        },
+        enddate:{
+          type:Date
+        },
+
+        originalData : {
+         type : Array,
+         value:[
+           {
+             "series": [
+              [1397102460000,11.4403],[1397139660000,13.1913],[1397177400000,12.8485],[1397228040000,10.975]
+             ],
+             "max": 35.4784,
+             "min": 7.6531,
+             "mean": 15.330657585139331,
+             "id": "px-elliot",
+             "name": "elliot"
+           }
+         ]
+       }
+      },
+      ready: function() {
+        var rangepicker = this.$.rangepicker
+        rangepicker.range = {
+            "from":"2017-02-22T04:01:00.000Z",
+            "to":"2017-02-27T20:42:00.000Z"
+        };
+        console.log('blankpage-view ready()')
+      },
+      _formatName: function(data) {
+        var  demoDataCode = JSON.stringify(data, null, ' ');
+        return demoDataCode;
+      },
+      _callme: function(){
+        var sd = new Date(this.$.rangepicker.range.from).getTime();
+        var ed= new Date(this.$.rangepicker.range.to).getTime();
+        var sp ={"startDate":sd, "endDate":ed, "machineList": "engine1:vibration_tg"}
+        this.$.tsQueryElement.params=sp;
+        console.log(sd);
+        console.log(ed);
+
+      }
+
+
+    });
+
+  </script>
+</dom-module>

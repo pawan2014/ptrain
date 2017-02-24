@@ -1,9 +1,7 @@
 ---
 applications:
-  - name: mchnoprtn-aws-event-consumer
+  - name: eventsimulator
     buildpack: java_buildpack
-    path: target/mchnoprtn-aws-event-consumer-0.0.1-SNAPSHOT.jar
-    memory: 1024M
-    services:
-     - mchnoprtn_message_queue_instance
-     - mchnoprtn-db-instance
+    path: target/eventsimulator-0.0.1-SNAPSHOT.jar
+    memory: 512M
+      
