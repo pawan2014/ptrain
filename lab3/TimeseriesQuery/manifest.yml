@@ -1,0 +1,6 @@
+---
+applications:
+  - name: aeromaintenanceservice
+    buildpack: java_buildpack
+    path: target/maintenance-0.0.1-SNAPSHOT.jar
+    memory: 256M
